@@ -1,0 +1,64 @@
+# To begin:
+
+# Take an input from the user for the total balance to be payed.
+# Take an input from the user for minimum payment amount.
+# Take an input from the user for how many payment periods they have until the deadline.
+#################################
+# Calculations:
+# Calculate the monthly payment needed to fully pay off a balance with the allotted time frame. done
+# Prompt the user to input the monthly payment amounts.done
+# If the payment amount is too small, change to the minimum payment amount. done
+# If the payment is larger than the remaining balance, change to the remaining balance.
+
+def checkInt(check):
+  Valid = True
+  while Valid == True :
+    try: 
+      num = int(check)
+      if num <= 0:
+        check = input('Please input a number greater than 0.\n')
+      elif num > 0:
+        Valid = False  
+    except:
+      check = input('your input is invalid please try again\n')  
+  return num
+
+def checkFloat(check):
+  Valid = True
+  while Valid == True :
+    try: 
+      num = float(check)
+      if num <= 0:
+        check = input('Please input a number greater than 0.\n')
+      elif num > 0:
+        Valid = False  
+    except:
+      check = input('your input is invalid please try again\n')  
+  return num
+
+
+payment = checkFloat(input('What is the total balance that needs to be payed?\n'))
+
+minBill = checkFloat(input("What's the minimum amount that needs to be payed\n"))
+
+payPeriod = checkInt(input("How many payment periods do you have till the deadline?\n"))
+
+month = payment/payPeriod
+month = round (month,2)
+print ("You have to pay $",month,"if you'd like to pay off your purchase.")
+
+paymentHistory = []
+for x in range(payPeriod):
+  howMuch = checkFloat(input(f'\nHow much would you like to pay for month {x+1}?\n'))
+  if howMuch > payment - sum(paymentHistory):
+    howMuch = payment - sum(paymentHistory)
+    paymentHistory.append(howMuch)
+    # print("x")
+  elif howMuch <= minBill:
+    howMuch = minBill
+    paymentHistory.append(howMuch)
+    # print("y")
+  else:
+    paymentHistory.append(howMuch)
+    # print("z")
+print(paymentHistory)
